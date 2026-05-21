@@ -1,28 +1,37 @@
 name: 🦖 DinoPort Auto Clone Core Java 😈
 
 on:
-  workflow_dispatch: # Cho phép sếp bấm nút kích hoạt bằng tay bất cứ lúc nào
+  workflow_dispatch: # Bấm nút kích hoạt bằng tay
 
 jobs:
   clone-and-filter:
     runs-on: ubuntu-latest
     steps:
-      - name: 📁 Khởi tạo kho của sếp
+      - name: 📁 Khởi tạo kho của bạn
         uses: actions/checkout@v4
 
-      - name: ⚡ Kéo và lọc đúng thư mục core/java từ Android 10
+      - name: ⚡ Kéo và lọc chính xác thư mục core/java từ Android 10
         run: |
-          mkdir -p temp_android10
-          cd temp_android10          
-          curl -L https://github.com/aosp-mirror/platform_frameworks_base/archive/refs/heads/android10-release.tar.gz | tar -xz --strip-components=3 "platform_frameworks_base-android10-release/core/java"
-          cd ..         
-          mv temp_android10/java ./core_java
-          rm -rf temp_android10
+          # 1. Tải file nén mã nguồn thô về
+          curl -L -o android10.tar.gz https://github.com/aosp-mirror/platform_frameworks_base/archive/refs/heads/android10-release.tar.gz
+          
+          # 2. Tạo thư mục tạm để xả nén
+          mkdir -p temp_extracted
+          
+          # 3. Chỉ giải nén đúng phân khúc core/java để tiết kiệm dung lượng
+          tar -xzf android10.tar.gz -C temp_extracted --strip-components=1
+          
+          # 4. Di chuyển thư mục core/java sạch sẽ vào kho của bạn
+          mkdir -p core_java
+          cp -r temp_extracted/core/java/* ./core_java/
+          
+          # 5. Dọn dẹp rác cho sạch kho
+          rm -rf temp_extracted android10.tar.gz
 
-      - name: 🚀 Đẩy code sạch lên GitHub của sếp
+      - name: 🚀 Đẩy code sạch lên GitHub của bạn
         run: |
           git config --global user.name "DinoPort-Bot"
-          git config --global user.name "dinoport-bot@github.com"
+          git config --global user.email "dinoport-bot@github.com"
           git add core_java/
-          git commit -m "😈 Đã hốt trọn ổ core/java Android 10 về nhà cho sếp!"
+          git commit -m "😈 Đã hốt trọn ổ core/java Android 10 về nhà cho bạn!" || echo "Không có thay đổi nào để commit"
           git push
