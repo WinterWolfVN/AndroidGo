@@ -1,0 +1,28 @@
+name: 🦖 DinoPort Auto Clone Core Java 😈
+
+on:
+  workflow_dispatch: # Cho phép sếp bấm nút kích hoạt bằng tay bất cứ lúc nào
+
+jobs:
+  clone-and-filter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📁 Khởi tạo kho của sếp
+        uses: actions/checkout@v4
+
+      - name: ⚡ Kéo và lọc đúng thư mục core/java từ Android 10
+        run: |
+          mkdir -p temp_android10
+          cd temp_android10          
+          curl -L https://github.com/aosp-mirror/platform_frameworks_base/archive/refs/heads/android10-release.tar.gz | tar -xz --strip-components=3 "platform_frameworks_base-android10-release/core/java"
+          cd ..         
+          mv temp_android10/java ./core_java
+          rm -rf temp_android10
+
+      - name: 🚀 Đẩy code sạch lên GitHub của sếp
+        run: |
+          git config --global user.name "DinoPort-Bot"
+          git config --global user.name "dinoport-bot@github.com"
+          git add core_java/
+          git commit -m "😈 Đã hốt trọn ổ core/java Android 10 về nhà cho sếp!"
+          git push
