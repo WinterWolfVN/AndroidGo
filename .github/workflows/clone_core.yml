@@ -23,7 +23,7 @@ jobs:
           
           # 4. Di chuyển thư mục core/java sạch sẽ vào kho của bạn
           mkdir -p core_java
-          cp -r temp_extracted/core/java/* ./core/java/
+          cp -r temp_extracted/core/java/* ./core_java/
           
           # 5. Dọn dẹp rác cho sạch kho
           rm -rf temp_extracted android10.tar.gz
