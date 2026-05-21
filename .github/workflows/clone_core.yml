@@ -23,7 +23,7 @@ jobs:
           
           # 4. Di chuyển thư mục core/java sạch sẽ vào kho của bạn
           mkdir -p core_java
-          cp -r temp_extracted/core/java/* ./core_java/
+          cp -r temp_extracted/core/java/* ./core/java/
           
           # 5. Dọn dẹp rác cho sạch kho
           rm -rf temp_extracted android10.tar.gz
@@ -32,6 +32,6 @@ jobs:
         run: |
           git config --global user.name "DinoPort-Bot"
           git config --global user.email "dinoport-bot@github.com"
-          git add core_java/
+          git add core/java/
           git commit -m "😈 Đã hốt trọn ổ core/java Android 10 về nhà cho bạn!" || echo "Không có thay đổi nào để commit"
           git push
