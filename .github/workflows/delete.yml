@@ -1,0 +1,24 @@
+name: 🦖 DinoPort Clean Room 😈
+
+on:
+  workflow_dispatch: # Bấm nút kích hoạt bằng tay để dọn dẹp
+
+jobs:
+  clean-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📁 Khởi tạo kho của bạn
+        uses: actions/checkout@v4
+
+      - name: 🪓 Xóa sạch thư mục core_java
+        run: |
+          rm -rf core_java
+          echo "Dọn dẹp bãi chiến trường sạch sẽ!"
+
+      - name: 🚀 Cập nhật lên GitHub
+        run: |
+          git config --global user.name "DinoPort-Bot"
+          git config --global user.email "dinoport-bot@github.com"
+          git add .
+          git commit -m "🧹 Đã xóa sạch thư mục core_java theo lệnh của bạn!" || echo "Kho đã sạch sẵn rồi"
+          git push
