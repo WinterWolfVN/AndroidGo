@@ -1,7 +1,7 @@
 name: Tu Dong Lay Code Java Vao Repo
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   clone-and-push:
@@ -17,38 +17,43 @@ jobs:
           git config --global user.name "Github Action"
           git config --global user.email "actions@github.com"
 
-      - name: Buoc 3 - Hut code tu Google API 37
+      - name: Buoc 3 - Hut tron bo Core Java cua API 37
         run: |
           mkdir temp_sdk && cd temp_sdk
           git init
           git remote add -f origin https://github.com/AndroidSDKSources/android-sdk-sources-for-api-level-37.0.git
           git config core.sparseCheckout true
           
-          # Lọc lấy các package cốt lõi sếp cần để không bị thiếu dependency
+          # Kho vũ khí tối thượng của sếp
           echo "java/nio/" >> .git/info/sparse-checkout
           echo "java/time/" >> .git/info/sparse-checkout
           echo "java/security/" >> .git/info/sparse-checkout
           echo "java/io/" >> .git/info/sparse-checkout
           echo "java/util/" >> .git/info/sparse-checkout
+          echo "java/lang/" >> .git/info/sparse-checkout
+          echo "java/math/" >> .git/info/sparse-checkout
+          echo "java/net/" >> .git/info/sparse-checkout
           
           git pull origin master
           cd ..
 
       - name: Buoc 4 - Dua thẳng vao thu muc java o goc repo của sếp
         run: |
-          # Tạo thư mục java ngay tại gốc repo
           mkdir -p java
           
-          # Chép sạch sẽ đống nio, time, security, io, util vào
+          # Chép sạch sẽ không thiếu một món
           cp -r temp_sdk/java/nio java/
           cp -r temp_sdk/java/time java/
           cp -r temp_sdk/java/security java/
           cp -r temp_sdk/java/io java/
           cp -r temp_sdk/java/util java/
+          cp -r temp_sdk/java/lang java/
+          cp -r temp_sdk/java/math java/
+          cp -r temp_sdk/java/net java/
           
           rm -rf temp_sdk
           
-          # Commit và đẩy thẳng lên GitHub cho sếp code trên web luôn
+          # Commit và đẩy thẳng lên GitHub cho sếp
           git add java/
-          git commit -m "Pháp sư gom hàng: Hốt đủ nio, time, security, io, util từ API 37 😈"
+          git commit -m "Pháp sư tối thượng: Hốt trọn bộ Core Java (nio, time, security, io, util, lang, math, net) API 37 😈"
           git push
